@@ -1,0 +1,23 @@
+﻿TOC MOCK — WINDOWS 10/11 x64
+
+1. Mở TOCMock-Setup.exe. Gói tự giải nén vào %LOCALAPPDATA%\TOCMock\app-<mã bản dựng>.
+2. Lần đầu, đọc và chấp nhận thông báo bật proxy và tự khởi động khi đăng nhập.
+3. Bấm phải biểu tượng TOC ở khay hệ thống → Cài chứng chỉ HTTPS… → xác nhận cài cho người dùng hiện tại. Sau đó khởi động lại ứng dụng cần dùng map.
+
+Không cần cài Python riêng. Không cần chạy quyền quản trị.
+Chạy nền không có cửa sổ console, có biểu tượng khay để quản lý.
+Bấm phải biểu tượng khay để tắt tự khởi động, gỡ chứng chỉ, hoặc Dừng và thoát (khôi phục proxy).
+Có thể mở EXE với --stop, --disable-startup, --restore-proxy hoặc --help.
+Tự khởi động dùng bản đã giải nén trong LOCALAPPDATA; bạn có thể di chuyển EXE tải về sau khi thiết lập.
+Mở thư mục JSON qua menu khay. JSON có thể chỉnh trong Resources\TOCSTUDIOS; mở lại EXE giữ nguyên các chỉnh sửa đó.
+
+Proxy chỉ lắng nghe trên 127.0.0.1:8877. HTTPS chỉ xử lý 11 hostname có map; request ngoài map được chuyển tiếp.
+Công cụ phát lại tài nguyên từ Resources.zip, không tự cập nhật theo thay đổi trong ứng dụng.
+Giữ nguyên byte đầu vào: TOC17.json và TOC50.json lỗi cú pháp; TOC60.json là JSONP. Các endpoint này có thể bị ứng dụng từ chối.
+Ứng dụng đích phải dùng proxy Windows và tin cậy CA. Ứng dụng dùng certificate pinning hoặc bỏ qua proxy có thể không hoạt động với map.
+
+Kiểm tra: 16 unit test map + 8 kiểm tra proxy thật HTTP/HTTPS; kiểm tra giải nén 2.954 tệp, mở lại, giữ JSON đã chỉnh và phát hiện thay đổi mã chương trình đều đạt.
+EXE đã build cho Windows x64 GUI. Chưa thử trực tiếp khay hệ thống, registry hoặc tự khởi động trên máy Windows thật. EXE chưa được ký Authenticode.
+
+Gỡ: tắt tự khởi động, gỡ chứng chỉ riêng của công cụ trong menu, rồi dừng công cụ. Sau đó có thể xóa %LOCALAPPDATA%\TOCMock và EXE tải về.
+Nếu bị buộc tắt và mất kết nối, mở lại EXE với --restore-proxy; hoặc Settings > Network & Internet > Proxy để tắt 127.0.0.1:8877.
