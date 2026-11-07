@@ -18,10 +18,14 @@ Heartbeat, hồ sơ và vertical_label tiếp tục nhận phản hồi thật. 
 
 Dừng bản cũ, đóng Douyin. Mở EXE này, mở Douyin và đăng nhập.
 Nếu vẫn văng: menu khay → Chỉ hai domain dig (đối chiếu lỗi đăng nhập) → Dừng và thoát → mở lại EXE và Douyin.
-Chế độ chỉ dig giữ đúng hai domain dig trả TK/chặn upstream; các domain HTTPS khác đi qua đường hầm, không map/giải mã.
+CẦN BẬT CHẾ ĐỘ CHỈ DIG TRƯỚC KHI ĐĂNG NHẬP ĐỂ THỬ BẢN SỬA ĐỊNH TUYẾN MỚI.
+Chế độ chỉ dig giữ hai domain dig trả TK/chặn upstream. Các họ douyin.com, amemv.com, snssdk.com, bytedance.com, zijieapi.com được bỏ qua proxy Windows để kết nối trực tiếp (cả subdomain), không chỉ tunnel qua proxy.
+Bypass cũ khớp hai domain dig tạm bị loại; các bypass khác giữ nguyên. Khi dừng, công cụ chỉ khôi phục bypass gốc nếu không có thay đổi từ bên ngoài.
+Chỉ áp dụng cho ứng dụng tôn trọng cấu hình proxy/bypass Windows.
 Muốn trở lại đầy đủ map: menu → Bật lại đầy đủ map → dừng và mở lại.
 Menu Mở log chẩn đoán mở %LOCALAPPDATA%\TOCMock\diagnostic.jsonl bằng Notepad.
-Log chỉ chứa thời điểm, host/endpoint cố định, mã trạng thái và nguồn map/upstream; không có cookie/token/query/body/hồ sơ. Giới hạn khoảng 2 MiB và một bản quay vòng.
+Log mới có log_version, mode, direct_bypass, cờ probe, sự kiện startup/kết nối/TLS, host/endpoint/mẫu đường dẫn chỉ gồm từ cố định và mã trạng thái.
+Không có cookie/token/query/body/hồ sơ, ID, đường dẫn lạ nguyên bản hoặc nội dung lỗi mạng nguyên bản. Chỉ gửi diagnostic.jsonl và nếu cần .1; không gửi cả thư mục TOCMock. Giới hạn khoảng 2 MiB và một bản quay vòng.
 TOC17/50 đã sửa cú pháp, TOC60 giữ JSONP làm tài nguyên tham khảo, không phát lại cho SDK.
 
 CHỈ 2 DOMAIN DIG TRẢ TK.JSON
@@ -36,7 +40,7 @@ Công cụ phát lại tài nguyên từ Resources.zip, không tự cập nhật
 Các tài nguyên JSON đã được kiểm tra parse; TOC60.json là JSONP hợp lệ được giữ nguyên wrapper JavaScript. Không sửa ID hồ sơ hay ép mã lỗi thành thành công.
 Ứng dụng đích phải dùng proxy Windows và tin cậy CA. Ứng dụng dùng certificate pinning hoặc bỏ qua proxy có thể không hoạt động với map.
 
-Kiểm thử đạt 37 unit test và 17 integration test: SDK HTTPS giữ chứng chỉ máy chủ gốc; heartbeat giữ status/cookie; dig vẫn trả cục bộ; log giới hạn kích thước và không chứa các dấu hiệu cookie/token/query/body/ID trong test.
+Kiểm thử đạt 42 unit test Python, 19 integration test proxy và 11 unit test Go cho bypass/khôi phục cấu hình. Windows GUI x64 build thành công; chưa thử trực tiếp Douyin trên máy người dùng.
 EXE đã build cho Windows x64 GUI. Chưa thử trực tiếp khay hệ thống, registry hoặc tự khởi động trên máy Windows thật. EXE chưa được ký Authenticode.
 
 Gỡ: tắt tự khởi động, gỡ chứng chỉ riêng của công cụ trong menu, rồi dừng công cụ. Sau đó có thể xóa %LOCALAPPDATA%\TOCMock và EXE tải về.
